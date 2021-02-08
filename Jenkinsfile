@@ -1,5 +1,11 @@
 pipeline {
-    agent none
+    agent { 
+
+        docker {
+            image 'node:6-alpine'
+            args '-u root -p 3000:3000'
+        }
+}
 
     environment {
         HOME = '.'
@@ -7,13 +13,7 @@ pipeline {
     }
     stages {
 
-        stage ('Docker Build') {
-            agent {docker 'node:6-alpine'}
-            steps {
-                echo 'Hello Docker'
-            }
-        }
-        stage('Build') {
+        stage('NPM Install') {
             steps {
                 sh 'npm install'
             }
